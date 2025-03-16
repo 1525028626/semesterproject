@@ -1,11 +1,4 @@
 /* Includes ------------------------------------------------------------------*/
-#include "DEV_Config.h"
-#include "EPD.h"
-#include "GUI_Paint.h"
-#include "imagedata.h"
-#include <stdlib.h>
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
 #include  "head.h"
 
 // 定义任务句柄
@@ -18,7 +11,6 @@ void epdTask(void *pvParameters) {
 
   printf("e-Paper Init and Clear...\r\n");
   EPD_2IN7_Init();
-  Serial.print("11");
   EPD_2IN7_Clear();
   DEV_Delay_ms(500);
 
@@ -35,18 +27,29 @@ void epdTask(void *pvParameters) {
 
   printf("show image for array\r\n");
   Paint_SelectImage(BlackImage);
-  Paint_Clear(WHITE);
-  Paint_DrawBitMap(gImage_2in7);
-  EPD_2IN7_Display(BlackImage);
-  DEV_Delay_ms(2000);
+  EPD_2IN7_Init_4Gray();
+  EPD_2IN7_Clear();
+  Paint_SetScale(4);
+  Paint_DrawBitMap(gImage_2in7_4Gray1);
+  EPD_2IN7_4GrayDisplay(BlackImage);
+  DEV_Delay_ms(10000);
 
+  // EPD_2IN7_Init();
+  // EPD_2IN7_Clear();
+  // Paint_Clear(WHITE);
 
+  // Paint_DrawBitMap(gImage_2in7);
+  // EPD_2IN7_Display(BlackImage);
+  // DEV_Delay_ms(10000);
+
+ 
   printf("Goto Sleep...\r\n");
   EPD_2IN7_Init();
   EPD_2IN7_Clear();
   EPD_2IN7_Sleep();
   free(BlackImage);
   BlackImage = NULL;
+  DEV_Delay_ms(10000);
 
 }
 void setup() {
@@ -64,6 +67,6 @@ void setup() {
 /* The main loop -------------------------------------------------------------*/
 void loop() {
   // FreeRTOS 会自动调度任务，主循环可以留空
- 
+  lv_timer_handler();
 }
 
