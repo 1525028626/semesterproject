@@ -1,73 +1,150 @@
 #include "Application/WordBook.h"
-#include <SPIFFS.h>
+#include <random>
 
-WordBook::WordBook(const char* path) : count(0), jsonPath(path) {
-    load();
-}
-
-void WordBook::load() {
-    File file = SPIFFS.open(jsonPath);
-    if (!file) return;
-
-    StaticJsonDocument<4096> doc;
-    deserializeJson(doc, file);
-    
-    JsonArray arr = doc["words"];
-    for (JsonObject obj : arr) {
-        if (count >= MAX_WORDS) break;
-        strlcpy(words[count], obj["word"], WORD_LEN);
-        strlcpy(translations[count], obj["translation"], TRANS_LEN);
-        count++;
+WordBook::WordBook() {
+    if (!initFs()) {
+        return;
     }
-    file.close();
-}
-
-void WordBook::save() {
-    StaticJsonDocument<4096> doc;
-    JsonArray arr = doc.createNestedArray("words");
-    
-    for (int i = 0; i < count; i++) {
-        JsonObject obj = arr.createNestedObject();
-        obj["word"] = words[i];
-        obj["translation"] = translations[i];
-    }
-    
-    File file = SPIFFS.open(jsonPath, FILE_WRITE);
-    if (file) {
-        serializeJson(doc, file);
-        file.close();
+    if (!SPIFFS.exists(WORDBOOK_FILE)) {
+        if (!createWordbook()) {
+            return;
+        }
     }
 }
 
-bool WordBook::add(const char* word, const char* trans) {
-    if (count >= MAX_WORDS) return false;
-    
-    strlcpy(words[count], word, WORD_LEN);
-    strlcpy(translations[count], trans, TRANS_LEN);
-    count++;
-    save();
+// 修改头文件引用
+
+
+bool WordBook::initFs() {  
+    if (!SPIFFS.begin(true)) {  
+        Serial.println("Failed to mount LittleFS");
+        return false;
+    }
     return true;
 }
 
-const char* WordBook::find(const char* word) {
-    static char result[TRANS_LEN] = {0};
-    for (int i = 0; i < count; i++) {
-        if (strcmp(words[i], word) == 0) {
-            strlcpy(result, translations[i], TRANS_LEN);
-            return result;
-        }
+bool WordBook::createWordbook() {
+    File file = SPIFFS.open(WORDBOOK_FILE, FILE_WRITE);  
+    if (!file) {
+        Serial.println("Failed to open file for writing");
+        return false;
     }
-    return "";
+    DynamicJsonDocument doc(6000);
+    JsonArray words = doc.createNestedArray("words");
+    if (serializeJson(doc, file) == 0) {
+        Serial.println("Failed to write to file");
+        file.close();
+        return false;
+    }
+    file.close();
+    return true;
 }
 
-const char* WordBook::get(int index) {
-    static char output[WORD_LEN + TRANS_LEN + 2] = {0};
-    if (index == 0) index = random(1, count + 1);
-    
-    if (index > 0 && index <= count) {
-        snprintf(output, sizeof(output), "%s\n%s", 
-                words[index-1], translations[index-1]);
-        return output;
+bool WordBook::addWord(const char* word, const char* translation) {
+    File file = SPIFFS.open(WORDBOOK_FILE, FILE_READ);  
+    if (!file) {
+        Serial.println("Failed to open file for reading");
+        return false;
     }
-    return "";
+    DynamicJsonDocument doc(6000);
+    DeserializationError error = deserializeJson(doc, file);
+    file.close();
+    if (error) {
+        Serial.print("Failed to read file: ");
+        Serial.println(error.c_str());
+        return false;
+    }
+    JsonArray words = doc["words"];
+    JsonObject newWord = words.createNestedObject();
+    newWord["word"] = word;
+    newWord["translation"] = translation;
+    file = SPIFFS.open(WORDBOOK_FILE, FILE_WRITE);
+    if (!file) {
+        Serial.println("Failed to open file for writing");
+        return false;
+    }
+    if (serializeJson(doc, file) == 0) {
+        Serial.println("Failed to write to file");
+        file.close();
+        return false;
+    }
+    file.close();
+    return true;
+}
+
+void WordBook::printAllWords() {
+    File file = SPIFFS.open(WORDBOOK_FILE, FILE_READ);  
+    if (!file) {
+        Serial.println("Failed to open file for reading");
+        return;
+    }
+    DynamicJsonDocument doc(6000);
+    DeserializationError error = deserializeJson(doc, file);
+    file.close();
+    if (error) {
+        Serial.print("Failed to read file: ");
+        Serial.println(error.c_str());
+        return;
+    }
+    JsonArray words = doc["words"];
+    for (JsonObject word : words) {
+        const char* wordText = word["word"];
+        const char* translation = word["translation"];
+        Serial.print("Word: ");
+        Serial.print(wordText);
+        Serial.print(", Translation: ");
+        Serial.println(translation);
+    }
+}
+
+const char* WordBook::getSingleWord(int choice) {
+    static char result[256];
+    File file = SPIFFS.open(WORDBOOK_FILE, FILE_READ);  // 改回SPIFFS
+    if (!file) {
+        strcpy(result, "Failed to open file for reading");
+        return result;
+    }
+    DynamicJsonDocument doc(6000);
+    DeserializationError error = deserializeJson(doc, file);
+    file.close();
+    if (error) {
+        strcpy(result, "Failed to read file: ");
+        strcat(result, error.c_str());
+        return result;
+    }
+    JsonArray words = doc["words"];
+    int wordCount = words.size();
+
+    if (wordCount == 0) {
+        strcpy(result, "No words in the wordbook.");
+        return result;
+    }
+
+    if (choice == 0) {
+        
+        srand(static_cast<unsigned int>(time(nullptr)));
+    
+        int randomIndex = rand() % 32+1;
+        JsonObject word = words[randomIndex];
+        Serial.print("Random Word: ");
+        Serial.print(randomIndex);
+        const char* wordText = word["word"];
+        const char* translation = word["translation"];
+        strcpy(result, wordText);
+        strcat(result, "\n");
+        strcat(result, translation);
+        return result;
+    } else if (choice >= 1 && choice <= wordCount) {
+        
+        JsonObject word = words[choice - 1];
+        const char* wordText = word["word"];
+        const char* translation = word["translation"];
+        strcpy(result, wordText);
+        strcat(result, "\n");
+        strcat(result, translation);
+        return result;
+    } else {
+        strcpy(result, "Invalid choice.");
+        return result;
+    }
 }

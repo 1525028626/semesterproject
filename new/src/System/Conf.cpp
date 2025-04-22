@@ -28,30 +28,25 @@ void Device_Screen(void* arg) {
         vTaskDelay(_xTicksToWait);
     }
 }
-int i=0;
+
 void network_task(void* arg) {
     TickType_t _xTicksToWait = pdMS_TO_TICKS(35000);
     for (;;) {
-        if(i==0){
-            i=1;
-            lv_scr_load(ui_HomePage);
-            lv_obj_invalidate(ui_HomePage);
-            logmy("sc1");
-        }else{
-            i=0;
-            lv_scr_load(ui_CalendarPage);
-            lv_obj_invalidate(ui_CalendarPage);
-            logmy("sc2");
-        }
+        lv_scr_load(ui_CalendarPage);
+        lv_obj_invalidate(ui_CalendarPage);
+         
         xTaskNotifyGive(Screen_Handle); 
         vTaskDelay(_xTicksToWait);
     } 
 }
 void wordbook_task(void* arg) {
     TickType_t _xTicksToWait = pdMS_TO_TICKS(10000);
-    WordBook wordbook("/words.json");
+    WordBook wordbook;
     for (;;) {
-        lv_textarea_set_text(ui_TextArea1, wordbook.get(0));
+        lv_scr_load(ui_HomePage);
+        lv_textarea_set_text(ui_TextArea1, wordbook.getSingleWord(0));
+        lv_obj_invalidate(ui_TextArea1);
+        xTaskNotifyGive(Screen_Handle);
         vTaskDelay(_xTicksToWait);
     }
 }
