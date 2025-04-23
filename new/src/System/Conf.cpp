@@ -1,6 +1,6 @@
 #include "System/Conf.h"
 TaskHandle_t Screen_Handle;
-TaskHandle_t network_Handle;
+TaskHandle_t weather_Handle;
 TaskHandle_t wordbook_Handle; 
 
 void  SystemInit() {
@@ -16,7 +16,7 @@ void Devices_Init(void) {
     xTaskCreatePinnedToCore(Device_Screen,      "Dev_Screen",       10000,  NULL, 1, &Screen_Handle,    0); 
 }
 void Applications_Init(void) {
-    xTaskCreatePinnedToCore(network_task    , "network_task",       10000,  NULL, 2, &network_Handle    ,0); 
+    xTaskCreatePinnedToCore(weather_task    , "weather_task",       10000,  NULL, 2, &weather_Handle    ,0); 
     xTaskCreatePinnedToCore(wordbook_task    , "wordbook_task",       10000,  NULL, 2, &wordbook_Handle    ,0); 
 }
 void Device_Screen(void* arg) {
@@ -29,12 +29,11 @@ void Device_Screen(void* arg) {
     }
 }
 
-void network_task(void* arg) {
-    TickType_t _xTicksToWait = pdMS_TO_TICKS(35000);
+void weather_task(void* arg) {
+    TickType_t _xTicksToWait = pdMS_TO_TICKS(10000);
+    Weather weather;
     for (;;) {
-        lv_scr_load(ui_CalendarPage);
-        lv_obj_invalidate(ui_CalendarPage);
-         
+        weather.weather_main();
         xTaskNotifyGive(Screen_Handle); 
         vTaskDelay(_xTicksToWait);
     } 
@@ -44,8 +43,8 @@ void wordbook_task(void* arg) {
     WordBook wordbook;
     for (;;) {
         lv_scr_load(ui_HomePage);
-        lv_textarea_set_text(ui_TextArea1, wordbook.getSingleWord(0));
-        lv_obj_invalidate(ui_TextArea1);
+        lv_textarea_set_text(ui_WordbookArea, wordbook.getSingleWord(0));
+        lv_obj_invalidate(ui_WordbookArea);
         xTaskNotifyGive(Screen_Handle);
         vTaskDelay(_xTicksToWait);
     }

@@ -11,9 +11,20 @@
 // SCREEN: ui_HomePage
 void ui_HomePage_screen_init(void);
 lv_obj_t * ui_HomePage;
-lv_obj_t * ui_TextArea1;
+lv_obj_t * ui_WordbookArea;
+lv_obj_t * ui_TimeArea;
+lv_obj_t * ui_btnWeather;
+lv_obj_t * ui_btnTime;
+lv_obj_t * ui_btnSetting;
+lv_obj_t * ui_btnApp;
 // CUSTOM VARIABLES
 lv_obj_t * uic_HomePage;
+lv_obj_t * uic_WordbookArea;
+lv_obj_t * uic_TimeArea;
+lv_obj_t * uic_btnWeather;
+lv_obj_t * uic_btnTime;
+lv_obj_t * uic_btnSetting;
+lv_obj_t * uic_btnApp;
 
 // SCREEN: ui_CalendarPage
 void ui_CalendarPage_screen_init(void);
@@ -21,6 +32,12 @@ lv_obj_t * ui_CalendarPage;
 lv_obj_t * ui_Calendar1;
 // CUSTOM VARIABLES
 lv_obj_t * uic_CalendarPage;
+
+// SCREEN: ui_WeatherPage
+void ui_WeatherPage_screen_init(void);
+lv_obj_t * ui_WeatherPage;
+lv_obj_t * ui_Chart1;
+// CUSTOM VARIABLES
 
 // EVENTS
 lv_obj_t * ui____initial_actions0;
@@ -51,6 +68,7 @@ void ui_init(void)
     lv_disp_set_theme(dispp, theme);
     ui_HomePage_screen_init();
     ui_CalendarPage_screen_init();
+    ui_WeatherPage_screen_init();
     ui____initial_actions0 = lv_obj_create(NULL);
     lv_disp_load_scr(ui_HomePage);
 }

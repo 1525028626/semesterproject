@@ -126,8 +126,8 @@ const char* WordBook::getSingleWord(int choice) {
     
         int randomIndex = rand() % 32+1;
         JsonObject word = words[randomIndex];
-        Serial.print("Random Word: ");
-        Serial.print(randomIndex);
+       
+        
         const char* wordText = word["word"];
         const char* translation = word["translation"];
         strcpy(result, wordText);

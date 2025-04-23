@@ -30,9 +30,20 @@ extern "C" {
 // SCREEN: ui_HomePage
 void ui_HomePage_screen_init(void);
 extern lv_obj_t * ui_HomePage;
-extern lv_obj_t * ui_TextArea1;
+extern lv_obj_t * ui_WordbookArea;
+extern lv_obj_t * ui_TimeArea;
+extern lv_obj_t * ui_btnWeather;
+extern lv_obj_t * ui_btnTime;
+extern lv_obj_t * ui_btnSetting;
+extern lv_obj_t * ui_btnApp;
 // CUSTOM VARIABLES
 extern lv_obj_t * uic_HomePage;
+extern lv_obj_t * uic_WordbookArea;
+extern lv_obj_t * uic_TimeArea;
+extern lv_obj_t * uic_btnWeather;
+extern lv_obj_t * uic_btnTime;
+extern lv_obj_t * uic_btnSetting;
+extern lv_obj_t * uic_btnApp;
 
 // SCREEN: ui_CalendarPage
 void ui_CalendarPage_screen_init(void);
@@ -41,9 +52,21 @@ extern lv_obj_t * ui_Calendar1;
 // CUSTOM VARIABLES
 extern lv_obj_t * uic_CalendarPage;
 
+// SCREEN: ui_WeatherPage
+void ui_WeatherPage_screen_init(void);
+extern lv_obj_t * ui_WeatherPage;
+extern lv_obj_t * ui_Chart1;
+// CUSTOM VARIABLES
+
 // EVENTS
 
 extern lv_obj_t * ui____initial_actions0;
+
+// IMAGES AND IMAGE SETS
+LV_IMG_DECLARE(ui_img_weather_png);    // assets/weather.png
+LV_IMG_DECLARE(ui_img_time_png);    // assets/time.png
+LV_IMG_DECLARE(ui_img_setting_png);    // assets/setting.png
+LV_IMG_DECLARE(ui_img_qr_png);    // assets/QR.png
 
 // FONTS
 LV_FONT_DECLARE(ui_font_ChineseSong16);

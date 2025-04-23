@@ -10,6 +10,7 @@
 #include "ui/ui.h"
 
 #include "Application/WordBook.h"
+#include "Application/Weather.h"
 
 void SystemInit();
 void Devices_Init(void);
@@ -17,7 +18,7 @@ void Applications_Init(void);
 
 
 void Device_Screen(void* arg);
-void network_task(void* arg);
+void weather_task(void* arg);
 void wordbook_task(void* arg);
 
 

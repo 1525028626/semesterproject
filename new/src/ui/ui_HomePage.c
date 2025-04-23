@@ -12,14 +12,79 @@ void ui_HomePage_screen_init(void)
     lv_obj_set_style_bg_color(ui_HomePage, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_HomePage, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_TextArea1 = lv_textarea_create(ui_HomePage);
-    lv_obj_set_width(ui_TextArea1, lv_pct(100));
-    lv_obj_set_height(ui_TextArea1, lv_pct(40));
-    lv_textarea_set_text(ui_TextArea1, "place\nv.放置");
-    lv_textarea_set_placeholder_text(ui_TextArea1, "Placeholder...");
-    lv_obj_set_style_text_align(ui_TextArea1, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_TextArea1, &ui_font_ChineseSong16, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_WordbookArea = lv_textarea_create(ui_HomePage);
+    lv_obj_set_width(ui_WordbookArea, lv_pct(100));
+    lv_obj_set_height(ui_WordbookArea, lv_pct(40));
+    lv_textarea_set_text(ui_WordbookArea, "place\nv.放置");
+    lv_textarea_set_placeholder_text(ui_WordbookArea, "Placeholder...");
+    lv_obj_set_style_text_align(ui_WordbookArea, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WordbookArea, &ui_font_ChineseSong16, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_TimeArea = lv_textarea_create(ui_HomePage);
+    lv_obj_set_width(ui_TimeArea, lv_pct(100));
+    lv_obj_set_height(ui_TimeArea, lv_pct(20));
+    lv_obj_set_x(ui_TimeArea, lv_pct(0));
+    lv_obj_set_y(ui_TimeArea, lv_pct(40));
+    lv_textarea_set_text(ui_TimeArea, "中国 福建 福州 24 多云");
+    lv_obj_set_style_text_color(ui_TimeArea, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_TimeArea, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_align(ui_TimeArea, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_TimeArea, &ui_font_ChineseSong16, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_btnWeather = lv_btn_create(ui_HomePage);
+    lv_obj_set_width(ui_btnWeather, lv_pct(25));
+    lv_obj_set_height(ui_btnWeather, lv_pct(40));
+    lv_obj_set_x(ui_btnWeather, lv_pct(0));
+    lv_obj_set_y(ui_btnWeather, lv_pct(60));
+    lv_obj_add_flag(ui_btnWeather, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
+    lv_obj_clear_flag(ui_btnWeather, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_radius(ui_btnWeather, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_btnWeather, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_btnWeather, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_img_src(ui_btnWeather, &ui_img_weather_png, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_btnTime = lv_btn_create(ui_HomePage);
+    lv_obj_set_width(ui_btnTime, lv_pct(25));
+    lv_obj_set_height(ui_btnTime, lv_pct(40));
+    lv_obj_set_x(ui_btnTime, lv_pct(25));
+    lv_obj_set_y(ui_btnTime, lv_pct(60));
+    lv_obj_add_flag(ui_btnTime, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
+    lv_obj_clear_flag(ui_btnTime, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_radius(ui_btnTime, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_btnTime, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_btnTime, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_img_src(ui_btnTime, &ui_img_time_png, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_btnSetting = lv_btn_create(ui_HomePage);
+    lv_obj_set_width(ui_btnSetting, lv_pct(25));
+    lv_obj_set_height(ui_btnSetting, lv_pct(40));
+    lv_obj_set_x(ui_btnSetting, lv_pct(50));
+    lv_obj_set_y(ui_btnSetting, lv_pct(60));
+    lv_obj_add_flag(ui_btnSetting, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
+    lv_obj_clear_flag(ui_btnSetting, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_radius(ui_btnSetting, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_btnSetting, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_btnSetting, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_img_src(ui_btnSetting, &ui_img_setting_png, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_btnApp = lv_btn_create(ui_HomePage);
+    lv_obj_set_width(ui_btnApp, lv_pct(25));
+    lv_obj_set_height(ui_btnApp, lv_pct(40));
+    lv_obj_set_x(ui_btnApp, lv_pct(75));
+    lv_obj_set_y(ui_btnApp, lv_pct(60));
+    lv_obj_add_flag(ui_btnApp, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
+    lv_obj_clear_flag(ui_btnApp, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_radius(ui_btnApp, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_btnApp, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_btnApp, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_img_src(ui_btnApp, &ui_img_qr_png, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     uic_HomePage = ui_HomePage;
+    uic_WordbookArea = ui_WordbookArea;
+    uic_TimeArea = ui_TimeArea;
+    uic_btnWeather = ui_btnWeather;
+    uic_btnTime = ui_btnTime;
+    uic_btnSetting = ui_btnSetting;
+    uic_btnApp = ui_btnApp;
 
 }
