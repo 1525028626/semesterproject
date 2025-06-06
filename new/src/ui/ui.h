@@ -28,7 +28,9 @@ extern "C" {
 // SCREEN: ui_HomePage
 void ui_HomePage_screen_init(void);
 extern lv_obj_t * ui_HomePage;
-extern lv_obj_t * ui_TimeArea;
+void ui_event_btnMain(lv_event_t * e);
+extern lv_obj_t * ui_btnMain;
+extern lv_obj_t * ui_MainArea;
 void ui_event_btnWeather(lv_event_t * e);
 extern lv_obj_t * ui_btnWeather;
 void ui_event_btnTime(lv_event_t * e);
@@ -36,15 +38,18 @@ extern lv_obj_t * ui_btnTime;
 void ui_event_btnSetting(lv_event_t * e);
 extern lv_obj_t * ui_btnSetting;
 extern lv_obj_t * ui_btnApp;
-extern lv_obj_t * ui_WordbookArea;
+extern lv_obj_t * ui_btnSecondary;
+extern lv_obj_t * ui_SecondaryArea;
 // CUSTOM VARIABLES
 extern lv_obj_t * uic_HomePage;
-extern lv_obj_t * uic_TimeArea;
+extern lv_obj_t * uic_btnWordbook;
+extern lv_obj_t * uic_MainArea;
 extern lv_obj_t * uic_btnWeather;
 extern lv_obj_t * uic_btnTime;
 extern lv_obj_t * uic_btnSetting;
 extern lv_obj_t * uic_btnApp;
-extern lv_obj_t * uic_WordbookArea;
+extern lv_obj_t * uic_btnSecondary;
+extern lv_obj_t * uic_SecondaryArea;
 
 // SCREEN: ui_CalendarPage
 void ui_CalendarPage_screen_init(void);
@@ -70,12 +75,38 @@ void ui_SettingPage_screen_init(void);
 extern lv_obj_t * ui_SettingPage;
 void ui_event_btnHome3(lv_event_t * e);
 extern lv_obj_t * ui_btnHome3;
+extern lv_obj_t * ui_SettingContainer;
 extern lv_obj_t * ui_wifiContainer;
 extern lv_obj_t * ui_wifiSwitch;
 extern lv_obj_t * ui_wifiTextArea;
+extern lv_obj_t * ui_bleContainer;
+extern lv_obj_t * ui_bleSwitch;
+extern lv_obj_t * ui_bleTextArea;
+extern lv_obj_t * ui_timeContainer;
+extern lv_obj_t * ui_timeModeSwitch;
+extern lv_obj_t * ui_timeTextArea;
+extern lv_obj_t * ui_memorandumContainer;
+extern lv_obj_t * ui_memorandumSwitch;
+extern lv_obj_t * ui_memorandumTextArea;
 // CUSTOM VARIABLES
 extern lv_obj_t * uic_SettingPage;
+extern lv_obj_t * uic_SettingContainer;
 extern lv_obj_t * uic_wifiContainer;
+extern lv_obj_t * uic_bleContainer;
+extern lv_obj_t * uic_bleSwitch;
+extern lv_obj_t * uic_bleTextArea;
+extern lv_obj_t * uic_timeContainer;
+extern lv_obj_t * uic_timeSwitch;
+extern lv_obj_t * uic_timeTextArea;
+extern lv_obj_t * uic_memorandumContainer;
+extern lv_obj_t * uic_memorandumSwitch;
+extern lv_obj_t * uic_memorandumTextArea;
+
+// SCREEN: ui_AppPage
+void ui_AppPage_screen_init(void);
+extern lv_obj_t * ui_AppPage;
+// CUSTOM VARIABLES
+extern lv_obj_t * uic_AppPage;
 
 // EVENTS
 

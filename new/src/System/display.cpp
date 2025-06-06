@@ -1,4 +1,5 @@
 #include "System/display.h"
+#include "lvgl.h"
 u8_t gray_buffer[EPD_WIDTH * EPD_HEIGHT/4];
 // 在文件顶部添加全局变量
 static bool display_updated = false;
@@ -44,7 +45,7 @@ bool lvgl_is_display_updated() {
 void lvgl_set_init(void) { 
 
     lv_init();
-    
+
     
     EPD_HW_Init();
     EPD_WhiteScreen_White();

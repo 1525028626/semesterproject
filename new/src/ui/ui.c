@@ -11,7 +11,9 @@
 // SCREEN: ui_HomePage
 void ui_HomePage_screen_init(void);
 lv_obj_t * ui_HomePage;
-lv_obj_t * ui_TimeArea;
+void ui_event_btnMain(lv_event_t * e);
+lv_obj_t * ui_btnMain;
+lv_obj_t * ui_MainArea;
 void ui_event_btnWeather(lv_event_t * e);
 lv_obj_t * ui_btnWeather;
 void ui_event_btnTime(lv_event_t * e);
@@ -19,15 +21,18 @@ lv_obj_t * ui_btnTime;
 void ui_event_btnSetting(lv_event_t * e);
 lv_obj_t * ui_btnSetting;
 lv_obj_t * ui_btnApp;
-lv_obj_t * ui_WordbookArea;
+lv_obj_t * ui_btnSecondary;
+lv_obj_t * ui_SecondaryArea;
 // CUSTOM VARIABLES
 lv_obj_t * uic_HomePage;
-lv_obj_t * uic_TimeArea;
+lv_obj_t * uic_btnWordbook;
+lv_obj_t * uic_MainArea;
 lv_obj_t * uic_btnWeather;
 lv_obj_t * uic_btnTime;
 lv_obj_t * uic_btnSetting;
 lv_obj_t * uic_btnApp;
-lv_obj_t * uic_WordbookArea;
+lv_obj_t * uic_btnSecondary;
+lv_obj_t * uic_SecondaryArea;
 
 // SCREEN: ui_CalendarPage
 void ui_CalendarPage_screen_init(void);
@@ -53,12 +58,38 @@ void ui_SettingPage_screen_init(void);
 lv_obj_t * ui_SettingPage;
 void ui_event_btnHome3(lv_event_t * e);
 lv_obj_t * ui_btnHome3;
+lv_obj_t * ui_SettingContainer;
 lv_obj_t * ui_wifiContainer;
 lv_obj_t * ui_wifiSwitch;
 lv_obj_t * ui_wifiTextArea;
+lv_obj_t * ui_bleContainer;
+lv_obj_t * ui_bleSwitch;
+lv_obj_t * ui_bleTextArea;
+lv_obj_t * ui_timeContainer;
+lv_obj_t * ui_timeModeSwitch;
+lv_obj_t * ui_timeTextArea;
+lv_obj_t * ui_memorandumContainer;
+lv_obj_t * ui_memorandumSwitch;
+lv_obj_t * ui_memorandumTextArea;
 // CUSTOM VARIABLES
 lv_obj_t * uic_SettingPage;
+lv_obj_t * uic_SettingContainer;
 lv_obj_t * uic_wifiContainer;
+lv_obj_t * uic_bleContainer;
+lv_obj_t * uic_bleSwitch;
+lv_obj_t * uic_bleTextArea;
+lv_obj_t * uic_timeContainer;
+lv_obj_t * uic_timeSwitch;
+lv_obj_t * uic_timeTextArea;
+lv_obj_t * uic_memorandumContainer;
+lv_obj_t * uic_memorandumSwitch;
+lv_obj_t * uic_memorandumTextArea;
+
+// SCREEN: ui_AppPage
+void ui_AppPage_screen_init(void);
+lv_obj_t * ui_AppPage;
+// CUSTOM VARIABLES
+lv_obj_t * uic_AppPage;
 
 // EVENTS
 lv_obj_t * ui____initial_actions0;
@@ -76,6 +107,15 @@ lv_obj_t * ui____initial_actions0;
 ///////////////////// ANIMATIONS ////////////////////
 
 ///////////////////// FUNCTIONS ////////////////////
+void ui_event_btnMain(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_screen_change(&ui_CalendarPage, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_CalendarPage_screen_init);
+    }
+}
+
 void ui_event_btnWeather(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
@@ -142,6 +182,7 @@ void ui_init(void)
     ui_CalendarPage_screen_init();
     ui_WeatherPage_screen_init();
     ui_SettingPage_screen_init();
+    ui_AppPage_screen_init();
     ui____initial_actions0 = lv_obj_create(NULL);
     lv_disp_load_scr(ui_HomePage);
 }

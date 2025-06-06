@@ -4,7 +4,7 @@
 #include <SPIFFS.h>
 #include <ArduinoJson.h>
 #include "ui/ui.h"
-
+#include "System/Bluetooth.h"
 void homepage_wordbook(void* arg);
 
 class WordBook {

@@ -10,6 +10,8 @@ void wifi_switch_handler(lv_event_t * e) {
         printf("wifi off\n");
         Network network;
         network.stop();
+        WiFi.mode(WIFI_OFF); // 新增：彻底关闭WiFi射频
+        ESP.restart(); // 新增：定期重启解决内存碎片
     }
 }
 // 添加构造函数实现

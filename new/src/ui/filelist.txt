@@ -2,6 +2,7 @@ ui_HomePage.c
 ui_CalendarPage.c
 ui_WeatherPage.c
 ui_SettingPage.c
+ui_AppPage.c
 ui.c
 ui_comp_hook.c
 ui_helpers.c

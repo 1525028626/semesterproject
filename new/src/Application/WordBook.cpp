@@ -3,12 +3,12 @@
 
 void homepage_wordbook(void* arg){
     WordBook wordbook;
-    TickType_t _xTicksToWait = pdMS_TO_TICKS(100000);
+    TickType_t _xTicksToWait = pdMS_TO_TICKS(1000000);
     while(1){
         printf("homepage_wordbook\n");
-        lv_textarea_set_text(ui_WordbookArea, wordbook.getSingleWord(0));
-        lv_obj_invalidate(ui_WordbookArea);
-        vTaskDelay(_xTicksToWait); // 每10秒更新一次
+        lv_textarea_set_text(ui_MainArea, wordbook.getSingleWord(0));
+        lv_obj_invalidate(ui_MainArea);
+        vTaskDelay(_xTicksToWait); 
     }
 }
 

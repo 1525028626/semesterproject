@@ -4,7 +4,7 @@ const String Weather::XINZHI_KEY = "Szpui2ZH-Eb51B_5T";
 
 void homepage_weather(void* arg){
     Weather weather;
-    TickType_t _xTicksToWait = pdMS_TO_TICKS(100000);
+    TickType_t _xTicksToWait = pdMS_TO_TICKS(1000000);
     while(1){
         printf("homepage_weather\n");
         weather.weather_main();// 每10秒更新一次
@@ -13,18 +13,23 @@ void homepage_weather(void* arg){
 }
 void weatherpage_weather(void* arg){
     Weather weather;
-    TickType_t _xTicksToWait = pdMS_TO_TICKS(100000);
+    TickType_t _xTicksToWait = pdMS_TO_TICKS(1000000);
     while(1){
         weather.weather_daily();// 每10秒更新一次
         vTaskDelay(_xTicksToWait);
     }
 }
+uint8_t flag_loc=0;
 void Weather::weather_main(){
     String country, province, city, weather, temp;
     String loc;
     getCityinfo(country, province, city, weather, temp);
-    loc = country + "/" + province + "/" + city+" "+temp + "℃";
-    lv_textarea_set_text(ui_TimeArea,loc.c_str());
+    if(flag_loc==0&&country!=NULL){
+        loc = country + "/" + province + "/" + city+" "+temp + "℃";
+        flag_loc=1;
+    }
+    printf("%s\n",loc.c_str());
+    lv_textarea_set_text(ui_SecondaryArea,loc.c_str());
 }
 void Weather::weather_daily(){
     String json = FileHandler::httpGetRequest(xinzhi_url("daily"));
@@ -45,7 +50,7 @@ void Weather::weather_daily(){
 }
 
 String Weather::xinzhi_url(String type) {
-    String url_xinzhi = "https://api.seniverse.com/v3/weather/";
+    String url_xinzhi = "http://api.seniverse.com/v3/weather/";
     //https://api.seniverse.com/v3/weather/now.json?key=Szpui2ZH-Eb51B_5T&location=ip&language=zh-Hans&unit=c
     //https://api.seniverse.com/v3/weather/daily.json?key=Szpui2ZH-Eb51B_5T&location=ip&language=zh-Hans&unit=c&start=0&days=7
     if(type == "daily") {
@@ -65,7 +70,7 @@ String Weather::xinzhi_url(String type) {
 
 bool Weather::getCityinfo(String& country, String& province, String& city, String& weather, String& temp) {
     String json = FileHandler::httpGetRequest(xinzhi_url("now"));
-    DynamicJsonDocument doc(1024);
+    DynamicJsonDocument doc(512);
     deserializeJson(doc, json);
     String loc = doc["results"][0]["location"]["path"].as<String>();
     String loc_split[4];

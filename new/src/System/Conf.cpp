@@ -19,6 +19,7 @@ void  SystemInit() {
 
     lv_scr_load(ui_HomePage);
     lv_obj_add_event_cb(ui_wifiSwitch, wifi_switch_handler, LV_EVENT_VALUE_CHANGED, NULL);
+    lv_obj_add_event_cb(ui_bleSwitch, ble_switch_handler, LV_EVENT_VALUE_CHANGED, NULL);
 }
 void System_Init(void) {
     xTaskCreatePinnedToCore(lvgl_task,      "lvgl_task",       10000,  NULL, 0, &lvgl_Handle,    0);

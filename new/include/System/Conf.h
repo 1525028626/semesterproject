@@ -12,6 +12,7 @@
 #include "Display_EPD_W21.h"
 #include "System/touch.h"
 #include "System/display.h"
+#include "System/Bluetooth.h"
 
 #include "Application/WordBook.h"
 #include "Application/Weather.h"
